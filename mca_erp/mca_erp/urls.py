@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 
 def home_redirect(request):
-    return redirect('/login')
+    return redirect('/signup')
 
 urlpatterns = [
 # path('admin/', admin.site.urls),
