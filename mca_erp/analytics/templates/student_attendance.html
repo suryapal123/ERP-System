@@ -1,0 +1,64 @@
+{% extends 'student_base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- 🔥 Heading -->
+<div class="mb-4">
+    <h2 class="fw-bold">📊 My Attendance</h2>
+</div>
+
+<!-- 🔥 TABLE CARD -->
+<div class="row justify-content-center">
+    <div class="col-md-10">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for r in records %}
+
+                    <tr>
+                        <td class="fw-semibold">{{r.date}}</td>
+                        <td>{{r.subject}}</td>
+
+                        <td>
+                            {% if r.status == "Present" %}
+                                <span class="badge bg-success px-3 py-2">✔ Present</span>
+                            {% else %}
+                                <span class="badge bg-danger px-3 py-2">✘ Absent</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">
+                            No attendance records found
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

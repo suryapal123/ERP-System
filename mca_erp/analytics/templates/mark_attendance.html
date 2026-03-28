@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- 🔥 Heading -->
+<div class="mb-4">
+    <h2 class="fw-bold">📅 Mark Attendance</h2>
+</div>
+
+<form method="POST">
+{% csrf_token %}
+
+<!-- 🔥 FILTER CARD -->
+<div class="row justify-content-center">
+    <div class="col-md-10">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4 mb-4">
+
+            <div class="row g-3">
+
+                <!-- Subject -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Select Subject</label>
+                    <select name="subject" class="form-control" required>
+                        {% for s in subjects %}
+                        <option value="{{s.id}}">
+                            {{s.subject_name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Date -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Select Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 ATTENDANCE TABLE -->
+<div class="row justify-content-center">
+    <div class="col-md-10">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <table class="table table-hover align-middle text-center">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-start">Student</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for student in students %}
+
+                    <tr>
+                        <td class="text-start fw-semibold">
+                            {{student.name}}
+                        </td>
+
+                        <!-- Present -->
+                        <td>
+                            <input type="radio"
+                                   name="status_{{student.id}}"
+                                   value="Present"
+                                   required>
+                        </td>
+
+                        <!-- Absent -->
+                        <td>
+                            <input type="radio"
+                                   name="status_{{student.id}}"
+                                   value="Absent">
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-muted">
+                            No students found
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 BUTTON -->
+<div class="row justify-content-center mt-4">
+    <div class="col-md-4">
+
+        <button class="btn btn-primary w-100 py-2">
+            💾 Save Attendance
+        </button>
+
+    </div>
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

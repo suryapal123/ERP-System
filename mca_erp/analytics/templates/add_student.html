@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-4">
+
+    <div class="col-md-7">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <!-- 🔥 Heading -->
+            <h3 class="text-center fw-bold mb-4">➕ Add Student</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- 🔥 FORM GRID -->
+                <div class="row align-items-center mb-3">
+                    <div class="col-md-4">
+                        <label class="fw-semibold">Name</label>
+                    </div>
+                    <div class="col-md-8">
+                        {{form.name}}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-3">
+                    <div class="col-md-4">
+                        <label class="fw-semibold">Roll No</label>
+                    </div>
+                    <div class="col-md-8">
+                        {{form.roll_no}}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-3">
+                    <div class="col-md-4">
+                        <label class="fw-semibold">Email</label>
+                    </div>
+                    <div class="col-md-8">
+                        {{form.email}}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-3">
+                    <div class="col-md-4">
+                        <label class="fw-semibold">Phone</label>
+                    </div>
+                    <div class="col-md-8">
+                        {{form.phone}}
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-4">
+                        <label class="fw-semibold">Semester</label>
+                    </div>
+                    <div class="col-md-8">
+                        {{form.semester}}
+                    </div>
+                </div>
+
+                <!-- 🔥 BUTTONS -->
+                <div class="d-flex gap-3">
+
+                    <button class="btn btn-primary w-100">
+                        💾 Save Student
+                    </button>
+
+                    <a href="/students/" class="btn btn-secondary w-100">
+                        ↩ Back
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

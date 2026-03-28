@@ -1,0 +1,47 @@
+
+    body {
+        background: linear-gradient(135deg, #6a85f1, #a777e3);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-card {
+        width: 380px;
+        padding: 30px;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .logo-img {
+        width: 70px;
+        margin-bottom: 15px;
+    }
+
+    .form-control, .form-select {
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 5px rgba(74,144,226,0.4);
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #4a90e2, #5a6df0);
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .btn-primary:hover {
+        opacity: 0.9;
+    }
+
+    .small-text {
+        font-size: 13px;
+    }

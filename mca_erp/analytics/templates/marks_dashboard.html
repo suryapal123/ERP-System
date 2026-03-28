@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Student Marks Analysis</h2>
+
+<a href="/add-marks/" class="btn btn-success mb-3">
+Add Marks
+</a>
+
+<div class="card shadow p-4">
+
+<h4>Marks Performance Graph</h4>
+
+<canvas id="marksChart"></canvas>
+
+</div>
+
+<br>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Student</th>
+<th>Subject</th>
+<th>Marks</th>
+</tr>
+
+{% for r in records %}
+
+<tr>
+<td>{{r.student}}</td>
+<td>{{r.subject}}</td>
+<td>{{r.marks}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<script>
+
+var ctx = document.getElementById('marksChart');
+
+new Chart(ctx,{
+
+type:'bar',
+
+data:{
+
+labels:{{students|safe}},
+
+datasets:[{
+
+label:'Marks',
+
+data:{{marks|safe}},
+
+backgroundColor:'#2563eb'
+
+}]
+
+}
+
+});
+
+</script>
+
+{% endblock %}

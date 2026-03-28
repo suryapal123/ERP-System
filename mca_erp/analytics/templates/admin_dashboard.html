@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- 🔥 HEADING -->
+<div class="mb-4">
+    <h2 class="fw-bold">📊 Teacher Dashboard</h2>
+     <span class="text-muted">Welcome {{request.user.username}}</span>
+</div>
+
+<!-- 🔥 CARDS -->
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-lg border-0 rounded-4 text-center p-4">
+            <h6 class="text-muted">Total Students</h6>
+            <h2 class="text-primary fw-bold">{{total_students}}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg border-0 rounded-4 text-center p-4">
+            <h6 class="text-muted">Total Subjects</h6>
+            <h2 class="text-success fw-bold">{{total_subjects}}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg border-0 rounded-4 text-center p-4">
+            <h6 class="text-muted">Average Marks</h6>
+            <h2 class="text-warning fw-bold">{{avg_marks|floatformat:2}}</h2>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔥 MARKS GRAPH -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-15">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center">
+            <h5 class="fw-bold mb-3">📈 Class Performance</h5>
+            <canvas id="marksChart"></canvas>
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 ATTENDANCE PIE -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center">
+            <h5 class="fw-bold mb-8">📊 Attendance Distribution</h5>
+
+            <div class="d-flex justify-content-center">
+                <canvas id="attendanceChart" style="max-width:450px;"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 ATTENDANCE % -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-15">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center">
+            <h5 class="fw-bold mb-3">📉 Attendance Percentage</h5>
+            <canvas id="attendancePercentageChart"></canvas>
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 LOW ATTENDANCE -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-15">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <h5 class="fw-bold text-danger mb-3">
+                ⚠ Students Below 75% Attendance
+            </h5>
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Student</th>
+                        <th>Attendance %</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for s in low_attendance %}
+                    <tr class="text-danger fw-semibold">
+                        <td>{{s.name}}</td>
+                        <td>{{s.percentage}}%</td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">
+                            All students have good attendance
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 CHART JS (UNCHANGED) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+/* MARKS GRAPH */
+new Chart(document.getElementById('marksChart'),{
+type:'bar',
+data:{
+labels:{{names|safe}},
+datasets:[{
+label:'Average Marks',
+data:{{marks|safe}},
+backgroundColor:'#2563eb'
+}]
+}
+});
+
+/* ATTENDANCE PIE */
+new Chart(document.getElementById('attendanceChart'),{
+type:'pie',
+data:{
+labels:['Present','Absent'],
+datasets:[{
+data:[{{present_count}},{{absent_count}}],
+backgroundColor:['#16a34a','#dc2626']
+}]
+}
+});
+
+/* ATTENDANCE % */
+new Chart(document.getElementById('attendancePercentageChart'),{
+type:'bar',
+data:{
+labels:{{student_names|safe}},
+datasets:[{
+label:'Attendance %',
+data:{{attendance_percentages|safe}},
+backgroundColor:'#16a34a'
+}]
+}
+});
+
+</script>
+
+{% endblock %}

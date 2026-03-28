@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- 🔥 Heading -->
+<div class="mb-4">
+    <h2 class="fw-bold">🏆 Student Results</h2>
+</div>
+
+<!-- 🔥 GRAPH -->
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center mb-4">
+
+            <h5 class="fw-bold mb-3">📊 Total Marks Graph</h5>
+
+            <canvas id="resultChart"></canvas>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 RESULTS TABLE -->
+<div class="row justify-content-center">
+    <div class="col-md-11">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle text-center">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Student</th>
+                            <th>MST-1</th>
+                            <th>MST-2</th>
+                            <th>Final</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for r in results %}
+
+                        <tr>
+
+                            <!-- 🔥 Rank Highlight -->
+                            <td>
+                                <span class="badge bg-warning text-dark px-3 py-2">
+                                    #{{r.rank}}
+                                </span>
+                            </td>
+
+                            <td class="fw-semibold text-start">
+                                {{r.name}}
+                            </td>
+
+                            <td>{{r.mst1}}</td>
+                            <td>{{r.mst2}}</td>
+                            <td>{{r.final}}</td>
+
+                            <!-- 🔥 Total Highlight -->
+                            <td>
+                                <span class="badge bg-primary px-3 py-2">
+                                    {{r.total}}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">
+                                No results available
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 CHART JS (UNCHANGED) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+var ctx = document.getElementById('resultChart');
+
+new Chart(ctx,{
+
+type:'bar',
+
+data:{
+labels: {{names|safe}},
+datasets:[{
+label:'Total Marks',
+data: {{totals|safe}},
+backgroundColor:'#2563eb'
+}]
+}
+
+});
+
+</script>
+
+{% endblock %}

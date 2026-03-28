@@ -1,0 +1,152 @@
+{% extends 'student_base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- 🔥 Welcome -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">👋 Welcome, {{student.name}}</h2>
+    <span class="badge bg-primary p-2">Semester {{student.semester}}</span>
+</div>
+
+<!-- 🔥 CARDS -->
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-lg border-0 rounded-4 text-center p-4">
+            <h6 class="text-muted">Roll Number</h6>
+            <h2 class="fw-bold text-primary">{{student.roll_no}}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg border-0 rounded-4 text-center p-4">
+            <h6 class="text-muted">Semester</h6>
+            <h2 class="fw-bold text-success">{{student.semester}}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg border-0 rounded-4 text-center p-4">
+            <h6 class="text-muted">Attendance</h6>
+            <h2 class="fw-bold text-danger">{{attendance_percentage}}%</h2>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔥 CHART (CENTERED + SMALL) -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center">
+            <h5 class="fw-bold mb-3">📊 Attendance Analytics</h5>
+
+            <div class="d-flex justify-content-center">
+                <canvas id="attendanceChart" style="max-width:550px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+var ctx = document.getElementById('attendanceChart');
+
+new Chart(ctx,{
+    type:'doughnut',
+    data:{
+        labels:['Present','Absent'],
+        datasets:[{
+            data:[{{present_classes}},{{absent_classes}}],
+            backgroundColor:['#22c55e','#ef4444'],
+            borderWidth:0
+        }]
+    },
+    options:{
+        plugins:{
+            legend:{ position:'bottom' }
+        }
+    }
+});
+</script>
+
+<!-- 🔥 SCHEDULE -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-17">
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+            <h5 class="fw-bold mb-3">📅 Today's Schedule</h5>
+
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Start</th>
+                        <th>End</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for c in todays_classes %}
+                    <tr>
+                        <td>{{c.subject}}</td>
+                        <td>{{c.start_time}}</td>
+                        <td>{{c.end_time}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">
+                            No classes today
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 🔥 ATTENDANCE -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-17">
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+            <h5 class="fw-bold mb-3">✅ Today's Attendance</h5>
+
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for a in todays_attendance %}
+                    <tr>
+                        <td>{{a.subject}}</td>
+                        <td>
+                            {% if a.status == "Present" %}
+                            <span class="badge bg-success px-3 py-2">✔ Present</span>
+                            {% else %}
+                            <span class="badge bg-danger px-3 py-2">✘ Absent</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">
+                            Attendance not marked yet
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'student_base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- 🔥 Heading -->
+<div class="mb-4">
+    <h2 class="fw-bold">📝 My Marks</h2>
+</div>
+
+<!-- 🔥 TABLE -->
+<div class="row justify-content-center">
+    <div class="col-md-17">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Exam</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for m in marks %}
+                    <tr>
+                        <td class="fw-semibold">{{m.subject}}</td>
+                        <td>{{m.exam_type}}</td>
+                        <td>
+                            <span class="badge bg-primary px-3 py-2">
+                                {{m.marks}}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">
+                            No marks available
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔥 CHART (ONLY UI IMPROVED, CHART SAME) -->
+<div class="row justify-content-center mt-5">
+    <div class="col-md-17">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center">
+
+            <h5 class="fw-bold mb-3">📊 Subject Performance</h5>
+
+            <!-- Only container changed -->
+            <div class="p-3">
+                <canvas id="subjectChart" style="max-width:100%;"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+<!-- 🔥 SAME CHART JS (NO CHANGE) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+var subjects = {{subjects|safe}};
+var averages = {{averages|safe}};
+
+new Chart(document.getElementById("subjectChart"),{
+
+type:'bar',
+
+data:{
+labels:subjects,
+datasets:[{
+label:"Average Marks",
+data:averages,
+backgroundColor:"#2563eb"
+}]
+},
+
+options:{
+responsive:true,
+plugins:{
+legend:{
+display:true
+}
+},
+scales:{
+y:{
+beginAtZero:true
+}
+}
+}
+
+});
+
+</script>
+
+{% endblock %}

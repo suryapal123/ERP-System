@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-4">
+
+    <div class="col-md-7">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <!-- 🔥 Heading -->
+            <h3 class="text-center fw-bold mb-4">📝 Add Student Marks</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- 🔥 FORM (same logic) -->
+                <div class="form-container">
+                    {{form.as_p}}
+                </div>
+
+                <!-- 🔥 BUTTONS -->
+                <div class="d-flex gap-3 mt-4">
+
+                    <button class="btn btn-success w-100">
+                        💾 Save Marks
+                    </button>
+
+                    <a href="/admin-dashboard/" class="btn btn-secondary w-100">
+                        ↩ Back
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 🔥 STYLE FIX FOR FORM -->
+<style>
+.form-container p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-container label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 5px rgba(22,163,74,0.3);
+    outline: none;
+}
+</style>
+
+{% endblock %}
