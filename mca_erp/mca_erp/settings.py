@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mca_erp.urls'
+ROOT_URLCONF = 'mca_erp.mca_erp.urls'
 
 TEMPLATES = [
     {
